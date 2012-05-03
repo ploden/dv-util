@@ -40,4 +40,9 @@
 
 // END:Nib
 
++ (CGFloat)cellHeight {
+  [NSException raise:@"VirtualMethodCalledException" format:@"This method must be implemented by the subclass"];
+  return 0.0f;
+}
+
 @end

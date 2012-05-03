@@ -5,8 +5,8 @@
 
 + (UINib *)nib;
 + (NSString *)nibName;
-
 + (NSString *)cellIdentifier;
 + (id)cellForTableView:(UITableView *)tableView fromNib:(UINib *)nib;
++ (CGFloat)cellHeight;
 
 @end
