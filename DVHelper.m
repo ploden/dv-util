@@ -75,6 +75,16 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 @end
 
+@implementation NSString (DVHelper)
+
+- (id)JSONValue {
+  NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
+  NSError *e = nil;
+  return [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&e];
+}
+
+@end
+
 @implementation DVHelper
 
 + (void)shiftOriginX:(UIView *)aView x:(CGFloat)x {

@@ -30,6 +30,12 @@
 
 @end
 
+@interface NSString (DVHelper)
+
+- (id)JSONValue;
+
+@end
+
 @interface DVHelper : NSObject {
 	
 }
