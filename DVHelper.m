@@ -225,6 +225,8 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   NSError *anyError = nil;
   NSArray *fetchedObjects = [aContext executeFetchRequest:request error:&anyError];
   
+  [request release];
+  
   if( fetchedObjects == nil ) {
     // throw exception
   }
@@ -262,7 +264,20 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
                                         sectionNameKeyPath:nil 
                                                  cacheName:nil];
 
+  [fetchRequest release];
+  
   return [fetchedResultsController autorelease]; 
+}
+
++ (id)loadObjectOfClassFromNib:(Class)aClass {
+  NSArray* nibContents = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(aClass) owner:nil options:nil];
+
+  for (id obj in nibContents) {
+    if ([obj isKindOfClass:aClass]) {
+      return obj;
+    }
+  }
+  return nil;
 }
 
 @end
