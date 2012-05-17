@@ -240,7 +240,9 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   }
   
   if ([fetchedObjects count] == 0) {
-    *didCreate = YES;
+    if (didCreate != NULL) {
+      *didCreate = YES;
+    }
     id obj = aCreateBlock();
     return obj;
     return nil;
@@ -249,7 +251,9 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
     // throw more than one exception
     return nil;
   } else {
-    *didCreate = NO;
+    if (didCreate != NULL) {
+      *didCreate = NO;
+    }
     return [fetchedObjects objectAtIndex:0];
   }
 }
