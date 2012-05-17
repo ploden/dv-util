@@ -62,4 +62,9 @@
                                                predicate:(NSPredicate *)aPredicate
                                           sortDescriptor:(NSSortDescriptor *)aSortDescriptor
                                                  context:(NSManagedObjectContext *)aContext;
+/*
+ Assumes nib name is same as class name.
+ */
++ (id)loadObjectOfClassFromNib:(Class)aClass;
+  
 @end
