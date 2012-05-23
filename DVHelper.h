@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PRPNibBasedTableViewCell.h"
 
 @interface UITableView (XCRHelper)
 
@@ -66,5 +67,6 @@
  Assumes nib name is same as class name.
  */
 + (id)loadObjectOfClassFromNib:(Class)aClass;
-  
++ (void)raiseVirtualMethodCalledException;
+
 @end

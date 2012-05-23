@@ -290,4 +290,8 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   return nil;
 }
 
++ (void)raiseVirtualMethodCalledException {
+  [NSException raise:@"VirtualMethodCalledException" format:@"This method must be implemented by the subclass"];
+}
+
 @end
