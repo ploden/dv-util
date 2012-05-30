@@ -85,6 +85,16 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 @end
 
+@implementation NSMutableArray (DVHelper)
+
+- (NSArray *)DV_sortedArrayUsingKey:(NSString *)aKey ascending:(BOOL)ascending {
+  NSSortDescriptor * descriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:YES] autorelease];
+  NSArray *a = [NSArray arrayWithObject:descriptor];
+  return [self sortedArrayUsingDescriptors:a];
+}
+
+@end
+
 @implementation DVHelper
 
 + (void)shiftOriginX:(UIView *)aView x:(CGFloat)x {
@@ -296,6 +306,10 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 + (void)raiseVirtualMethodCalledException {
   [NSException raise:@"VirtualMethodCalledException" format:@"This method must be implemented by the subclass"];
+}
+
++ (void)setContentWidth:(UIScrollView *)aScrollView width:(CGFloat)aWidth {
+  [aScrollView setContentSize:CGSizeMake(aWidth, aScrollView.contentSize.height)];
 }
 
 @end

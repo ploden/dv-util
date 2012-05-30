@@ -37,6 +37,12 @@
 
 @end
 
+@interface NSMutableArray (DVHelper)
+
+- (NSMutableArray *)DV_sortedArrayUsingKey:(NSString *)aKey ascending:(BOOL)ascending;
+  
+@end
+  
 @interface DVHelper : NSObject {
 	
 }
@@ -68,5 +74,6 @@
  */
 + (id)loadObjectOfClassFromNib:(Class)aClass;
 + (void)raiseVirtualMethodCalledException;
++ (void)setContentWidth:(UIScrollView *)aScrollView width:(CGFloat)aWidth;
 
 @end
