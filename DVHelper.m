@@ -312,4 +312,27 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   [aScrollView setContentSize:CGSizeMake(aWidth, aScrollView.contentSize.height)];
 }
 
++ (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight {
+  CGFloat newWidth = image.size.width;
+  CGFloat newHeight = image.size.height;
+  
+  CGFloat scale = 1.0f;
+  
+  if (image.size.width > maxWidth) {
+    scale = image.size.width / maxWidth;
+    CGFloat scaledHeight = image.size.height * scale;
+    if (scaledHeight > maxHeight) {
+      scale = image.size.height / maxHeight;
+    }
+  } else if (image.size.height > maxHeight) {
+    scale = image.size.height / maxHeight;
+  }
+  
+  newWidth = image.size.width * scale;
+  newHeight = image.size.height *scale;
+  
+  [imageView setImage:image];
+  [U2NHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
+}
+
 @end
