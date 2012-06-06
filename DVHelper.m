@@ -95,6 +95,21 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 @end
 
+@implementation UINavigationController (DVHelper)
+
+- (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController {
+  [UIView transitionWithView:self.view
+                    duration:0.75
+                     options:UIViewAnimationOptionTransitionCrossDissolve
+                  animations:^{
+                    [self pushViewController:viewController animated:NO];
+                  }
+                  completion:NULL
+   ];
+}
+
+@end
+
 @implementation DVHelper
 
 + (void)shiftOriginX:(UIView *)aView x:(CGFloat)x {

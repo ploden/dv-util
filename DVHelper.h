@@ -43,6 +43,12 @@
   
 @end
   
+@interface UINavigationController (DVHelper)
+
+- (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController;
+
+@end
+
 @interface DVHelper : NSObject {
 	
 }
