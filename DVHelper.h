@@ -82,5 +82,6 @@
 + (void)raiseVirtualMethodCalledException;
 + (void)setContentWidth:(UIScrollView *)aScrollView width:(CGFloat)aWidth;
 + (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight;
++ (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys;
 
 @end

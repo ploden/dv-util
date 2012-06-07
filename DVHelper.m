@@ -350,4 +350,23 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   [U2NHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
 }
 
++ (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys {
+  NSRange objectsRange = NSMakeRange(0, [objects count]);
+  id* cObjectsArray = calloc(objectsRange.length, sizeof(id));
+  [objects getObjects:cObjectsArray range:objectsRange];
+  
+  NSRange keysRange = NSMakeRange(0, [keys count]);
+  id* cKeysArray = calloc(keysRange.length, sizeof(id));
+  [keys getObjects:cKeysArray range:keysRange];
+  
+  CFDictionaryRef dict = CFDictionaryCreate(kCFAllocatorDefault,
+                                            (const void **)cKeysArray,
+                                            (const void **)cObjectsArray,
+                                            [objects count],
+                                            &kCFTypeDictionaryKeyCallBacks,
+                                            &kCFTypeDictionaryValueCallBacks);
+  
+  return dict;
+}
+
 @end
