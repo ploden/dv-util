@@ -37,7 +37,7 @@
 
 @end
 
-@interface NSMutableArray (DVHelper)
+@interface NSArray (DVHelper)
 
 - (NSMutableArray *)DV_sortedArrayUsingKey:(NSString *)aKey ascending:(BOOL)ascending;
   

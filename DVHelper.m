@@ -85,10 +85,10 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 @end
 
-@implementation NSMutableArray (DVHelper)
+@implementation NSArray (DVHelper)
 
 - (NSArray *)DV_sortedArrayUsingKey:(NSString *)aKey ascending:(BOOL)ascending {
-  NSSortDescriptor * descriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:YES] autorelease];
+  NSSortDescriptor * descriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:ascending] autorelease];
   NSArray *a = [NSArray arrayWithObject:descriptor];
   return [self sortedArrayUsingDescriptors:a];
 }
