@@ -334,17 +334,17 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   CGFloat scale = 1.0f;
   
   if (image.size.width > maxWidth) {
-    scale = image.size.width / maxWidth;
+    scale = maxWidth / image.size.width;
     CGFloat scaledHeight = image.size.height * scale;
     if (scaledHeight > maxHeight) {
-      scale = image.size.height / maxHeight;
+      scale = maxHeight / image.size.height;
     }
   } else if (image.size.height > maxHeight) {
-    scale = image.size.height / maxHeight;
+    scale = maxHeight / image.size.height;
   }
   
   newWidth = image.size.width * scale;
-  newHeight = image.size.height *scale;
+  newHeight = image.size.height * scale;
   
   [imageView setImage:image];
   [U2NHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
