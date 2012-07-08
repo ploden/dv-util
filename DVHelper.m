@@ -347,7 +347,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   newHeight = image.size.height * scale;
   
   [imageView setImage:image];
-  [U2NHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
+  [DVHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
 }
 
 + (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys {
