@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PRPNibBasedTableViewCell.h"
+#import <CoreData/CoreData.h>
 
 @interface UITableView (XCRHelper)
 
