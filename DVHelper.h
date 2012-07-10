@@ -43,6 +43,12 @@
   
 @end
   
+@interface UILabel (DVHelper)
+
+- (void)DV_sizeToFitVerticallyConstrainedToHeight:(CGFloat)aHeight;
+
+@end
+  
 @interface UINavigationController (DVHelper)
 
 - (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController;

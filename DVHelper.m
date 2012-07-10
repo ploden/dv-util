@@ -95,6 +95,15 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
 @end
 
+@implementation UILabel (DVHelper)
+
+- (void)DV_sizeToFitVerticallyConstrainedToHeight:(CGFloat)aHeight {
+  CGSize s = [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(self.frame.size.width, self.frame.size.height) lineBreakMode:self.lineBreakMode];
+  [U2NHelper setHeight:self height:MIN(aHeight, s.height)];
+}
+
+@end
+
 @implementation UINavigationController (DVHelper)
 
 - (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController {
