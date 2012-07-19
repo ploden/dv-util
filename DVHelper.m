@@ -105,7 +105,7 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
 
 - (void)DV_sizeToFitVerticallyConstrainedToHeight:(CGFloat)aHeight {
   CGSize s = [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(self.frame.size.width, aHeight) lineBreakMode:self.lineBreakMode];
-  [U2NHelper setHeight:self height:s.height];
+  [DVHelper setHeight:self height:s.height];
 }
 
 @end
