@@ -35,6 +35,7 @@
 @interface NSString (DVHelper)
 
 - (id)JSONValue;
+- (NSString *)DV_stringByPercentEncodingUsingEncoding:(NSStringEncoding)encoding;
 
 @end
 

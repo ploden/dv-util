@@ -83,6 +83,12 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
   return [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&e];
 }
 
+- (NSString *)DV_stringByPercentEncodingUsingEncoding:(NSStringEncoding)encoding {
+return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self,
+                                                            NULL, (CFStringRef)@";/?:@&=$+{}<>,",
+                                                            CFStringConvertNSStringEncodingToEncoding(encoding));
+}  
+
 @end
 
 @implementation NSArray (DVHelper)
