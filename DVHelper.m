@@ -101,6 +101,15 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
 
 @end
 
+@implementation UILabel (DVHelper)
+
+- (void)DV_sizeToFitVerticallyConstrainedToHeight:(CGFloat)aHeight {
+  CGSize s = [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(self.frame.size.width, aHeight) lineBreakMode:self.lineBreakMode];
+  [U2NHelper setHeight:self height:s.height];
+}
+
+@end
+
 @implementation UINavigationController (DVHelper)
 
 - (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController {
