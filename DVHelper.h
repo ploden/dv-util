@@ -91,5 +91,6 @@
 + (void)setContentWidth:(UIScrollView *)aScrollView width:(CGFloat)aWidth;
 + (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight;
 + (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys;
++ (NSArray *)fetchResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context;
 
 @end

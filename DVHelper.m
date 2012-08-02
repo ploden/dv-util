@@ -267,16 +267,8 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
                 didCreate:(BOOL*)didCreate
               createBlock:(id(^)())aCreateBlock
 {
-  NSFetchRequest *request = [[NSFetchRequest alloc] init];
-  
-  NSEntityDescription *entity = [NSEntityDescription entityForName:anEntityName inManagedObjectContext:aContext];
-  [request setEntity:entity];
-  [request setPredicate:aPredicate];
-  NSError *anyError = nil;
-  NSArray *fetchedObjects = [aContext executeFetchRequest:request error:&anyError];
-  
-  [request release];
-  
+  NSArray *fetchedObjects = [DVHelper fetchResultsForEntityName:anEntityName predicate:aPredicate managedObjectContext:aContext];;
+    
   if( fetchedObjects == nil ) {
     // throw exception
   }
@@ -382,6 +374,16 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
                                             &kCFTypeDictionaryValueCallBacks);
   
   return dict;
+}
+
++ (NSArray *)fetchResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context
+{
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
+  [fetchRequest setPredicate:predicate];
+  NSError *error = nil;
+  NSArray *a = [context executeFetchRequest:fetchRequest error:&error];
+  [fetchRequest release];
+  return a;
 }
 
 @end
