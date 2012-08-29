@@ -9,6 +9,24 @@
 #import "PRPNibBasedTableViewCell.h"
 #import <CoreData/CoreData.h>
 
+#define invokeSupersequent(...) \
+([self getImplementationOf:_cmd \
+after:impOfCallingMethod(self, _cmd)]) \
+(self, _cmd, ##__VA_ARGS__)
+
+#define invokeSupersequentNoParameters() \
+([self getImplementationOf:_cmd \
+after:impOfCallingMethod(self, _cmd)]) \
+(self, _cmd)
+
+IMP impOfCallingMethod(id lookupObject, SEL selector);
+
+@interface NSObject (SupersequentImplementation)
+
+- (IMP)getImplementationOf:(SEL)lookup after:(IMP)skip;
+
+@end
+
 @interface UITableView (XCRHelper)
 
 - (void)deselectSelectedRow;
@@ -92,5 +110,6 @@
 + (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight;
 + (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys;
 + (NSArray *)fetchResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)fetchLocalResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context;
 
 @end
