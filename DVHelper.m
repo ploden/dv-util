@@ -389,7 +389,6 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   [fetchRequest setEntity:entity];
   [fetchRequest setPredicate:aPredicate];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
-  [fetchRequest setFetchBatchSize:20];
 
   NSFetchedResultsController *fetchedResultsController = 
   [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
