@@ -197,6 +197,14 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
 
 @end
 
+@implementation UIView (DVHelper)
+
+- (CGFloat)DV_originYPlusHeight {
+  return self.frame.origin.y + self.frame.size.height;
+}
+
+@end
+
 @implementation UINavigationController (DVHelper)
 
 - (void)DV_pushViewControllerFadeIn:(UIViewController *)viewController {
