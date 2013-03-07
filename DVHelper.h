@@ -72,6 +72,7 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 @interface UIView (DVHelper)
 
 - (CGFloat)DV_originYPlusHeight;
+- (CGFloat)DV_originXPlusWidth;
 
 @end
   

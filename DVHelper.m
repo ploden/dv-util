@@ -203,6 +203,10 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   return self.frame.origin.y + self.frame.size.height;
 }
 
+- (CGFloat)DV_originXPlusWidth {
+  return self.frame.origin.x + self.frame.size.width;
+}
+
 @end
 
 @implementation UINavigationController (DVHelper)
