@@ -487,4 +487,8 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
    */
 }
 
++ (BOOL)isiPhone5 {
+  return ([UIScreen mainScreen].scale == 2.f && [[UIScreen mainScreen] bounds].size.height == 568.0f);
+}
+
 @end

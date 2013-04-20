@@ -9,64 +9,145 @@
 #import "PFWScrollView.h"
 #import "PFWScrollViewProtocol.h"
 
-
-
 @implementation PFWScrollView
 
-@synthesize pageArray;
+- (id)initWithArray:(NSArray *)array {
+  if ( ! (self = [super init]) ) return nil;
+  
+  [self setPageArray:array];
+  
+  [self setClipsToBounds:YES];
+  
+  [super setDelegate:self];
 
-- (id)initWithArray:(NSArray *)array{
-    [super init];
-    
+  _currentPageNum = 0;
+  
+  return self;
+}
+
+- (void)setDelegate:(id<UIScrollViewDelegate>)delegate {
+  [super setDelegate:self];
+}
+
+- (void)setPageArray:(NSArray *)pageArray {
+  self.delegate = self;
+  
+  if (pageArray != _pageArray) {
     [self setScrollEnabled:YES];
     [self setPagingEnabled:YES];
-    pageArray = [[NSArray alloc] initWithArray:array];
+    
+    _pageArray = pageArray;
+        
+    CGSize size = self.frame.size;
 
-    currIndex = 4;
-
-    for (int i=0; i<3; i++) {
-        [[pageArray objectAtIndex:i] configureForPageNumber:currIndex + i];
-        [self addSubview:[pageArray objectAtIndex:i]];
+    for (int i = 0; i < 3; i++) {
+      UIView<PFWScrollViewDetailView> *v = _pageArray[i];
+      CGRect frameRect = CGRectMake(i * size.width, 0.0f, size.width, size.height);
+      [v setFrame:frameRect];
+      [self addSubview:v];
+      [v configureForPageNumber:_currentPageNum + i size:CGSizeZero];
     }
-
-    NSLog(@" %@",[pageArray objectAtIndex:1]);
-    [self setContentSize:CGSizeMake(3*768, 1)];	
-    [self scrollRectToVisible:CGRectMake(0,0,768,1024) animated:NO];
     
-    self.delegate = self;
-    
-    return self;
+    [self setContentSize:CGSizeMake(3*self.frame.size.width, self.frame.size.height)];
+    [self scrollRectToVisible:CGRectMake(0,0,size.width,size.height) animated:NO];
+  }
 }
 
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@" %@",[pageArray objectAtIndex:1]);
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  CGSize size = self.frame.size;
+  
+  CGFloat pageWidth = self.frame.size.width;
+  float fractionalPage = self.contentOffset.x / pageWidth;
+  NSInteger pageIndex = (int)lround(fractionalPage);
     
-    
-    if (self.contentOffset.x == 0 && currIndex > 0) {
-        currIndex = currIndex - 1;    
-        for (int i=0; i<3; i++) {
-            [[pageArray objectAtIndex:i] configureForPageNumber:currIndex + i];
-            [self scrollRectToVisible:CGRectMake(768,0,768,1024) animated:NO];
-        }
-    } else if (self.contentOffset.x == 1536 && currIndex < 4){
-        currIndex = currIndex + 1;
-        for (int i=0; i<3; i++) {
-            [[pageArray objectAtIndex:i] configureForPageNumber:currIndex + i];
-            [self scrollRectToVisible:CGRectMake(768,0,768,1024) animated:NO];
-        }
+  NSInteger newPageNum = 0;
+  
+  NSInteger max = [self.secondDelegate numberOfPages];
+  
+  switch (pageIndex) {
+    case 0:
+      newPageNum = _currentPageNum - 1;
+      break;
+    case 1:
+      if (_currentPageNum == 0) {
+        newPageNum = 1;
+      } else if (_currentPageNum == max) {
+        newPageNum = max - 1;
+      } else {
+        return;
+      }
+      break;
+    case 2:
+      newPageNum = _currentPageNum + 1;
+      break;
+    default:
+      break;
+  }
+  
+  newPageNum = MAX(0, MIN(newPageNum, max - 1));
+  
+  if (newPageNum != _currentPageNum) {
+    if (_currentPageNum <= 1 && newPageNum <= 1) {
+      // do nothing, already scrolled far left
+    } else if (_currentPageNum >= ([self.secondDelegate numberOfPages] - 2)) {
+      // do nothing, already scrolled far right
+      NSLog(@"right");
+    } else {
+      // scroll so that current page is now in middle
+      for (int i = 0; i < 3; i++) {
+        [_pageArray[i] configureForPageNumber:newPageNum + (i - 1) size:CGSizeZero];
+      }
+      [self scrollRectToVisible:CGRectMake(size.width,0,size.width,size.height) animated:NO];
     }
-
-    [self setContentOffset:CGPointMake(self.contentOffset.x,0)];
     
+    _currentPageNum = newPageNum;
+  }
+  
+  [self setContentOffset:CGPointMake(self.contentOffset.x,0)];
+
+  [self.secondDelegate scrollview:self didScrollToPage:newPageNum];
 }
 
+- (void)scrollToPage:(NSInteger)index {
+  if (index == _currentPageNum) return;
+  
+  _currentPageNum = index;
+  
+  CGSize size = self.frame.size;
 
-- (void)dealloc {
-    for (int i=0; i<3; i++) {
-    }
-    [super dealloc];
+  NSInteger offset = 0;
+  
+  CGFloat xOffset = 0.0f;
+  
+  if (index == 0) {
+    offset = 0;
+    xOffset = 0.0f;
+  } else if (index == [self.secondDelegate numberOfPages] - 1) {
+    offset = 2;
+    xOffset = size.width * 2;
+  } else {
+    offset = 1;
+    xOffset = size.width;
+  }
+  
+  for (int i = 0; i < 3; i++) {
+    [_pageArray[i] configureForPageNumber:index + (i - offset) size:CGSizeZero];
+  }
+  
+  [self scrollRectToVisible:CGRectMake(xOffset, 0.0f, size.width, size.height) animated:NO];
 }
 
+- (void)layoutSubviews {
+  CGSize size = self.frame.size;
+  
+  for (int i = 0; i < 3; i++) {
+    UIView<PFWScrollViewDetailView> *v = _pageArray[i];
+    CGRect frameRect = CGRectMake(i * size.width, 0.0f, size.width, size.height);
+    [v setFrame:frameRect];
+  }
+  
+  [self setContentSize:CGSizeMake(3*self.frame.size.width, self.frame.size.height)];
+  ;
+}
 
 @end

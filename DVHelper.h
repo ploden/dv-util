@@ -112,4 +112,6 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 + (NSArray *)fetchResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)fetchLocalResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context;
 
++ (BOOL)isiPhone5;
+
 @end
