@@ -68,6 +68,13 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 - (void)DV_sizeToFitVerticallyConstrainedToHeight:(CGFloat)aHeight;
 
 @end
+
+@interface UIView (DVHelper)
+
+- (CGFloat)DV_originYPlusHeight;
+- (CGFloat)DV_originXPlusWidth;
+
+@end
   
 @interface UINavigationController (DVHelper)
 
