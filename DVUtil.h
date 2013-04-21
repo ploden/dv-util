@@ -6,14 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DVHelper.h"
 
-@interface UITableView (XCRHelper)
-
-- (void)deselectSelectedRow;
-
-@end
-
-@interface DVUtil : NSObject {
+@interface DVUtil : DVHelper {
 	
 }
 

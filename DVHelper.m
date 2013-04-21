@@ -432,10 +432,7 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   [aScrollView setContentSize:CGSizeMake(aWidth, aScrollView.contentSize.height)];
 }
 
-+ (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight {
-  CGFloat newWidth = image.size.width;
-  CGFloat newHeight = image.size.height;
-  
++ (void)scaleImageView:(UIImageView *)imageView image:(UIImage *)image maxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight {  
   CGFloat scale = 1.0f;
   
   if (image.size.width > maxWidth) {
@@ -448,8 +445,8 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
     scale = maxHeight / image.size.height;
   }
   
-  newWidth = image.size.width * scale;
-  newHeight = image.size.height * scale;
+  CGFloat newWidth = image.size.width * scale;
+  CGFloat newHeight = image.size.height * scale;
   
   [imageView setImage:image];
   [DVHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
