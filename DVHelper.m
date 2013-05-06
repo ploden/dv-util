@@ -340,27 +340,6 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
   }
 }
 
-+ (UIView *)firstResponderForView:(UIView *)aView {
-  __block UIView * (^getFirstResponder)(UIView *);
-  
-  getFirstResponder = ^(UIView *aView) {
-    UIView *c = nil;
-    
-    if ([aView isFirstResponder]) {
-      return aView;
-    }
-    if ([[aView subviews] count] > 0) {
-      for (UIView *subview in aView.subviews) {
-        c = getFirstResponder(subview);
-        if (c) return c;
-      }
-    }
-    return c;
-  };  
-  
-  return getFirstResponder(aView);
-}
-
 + (id)getOrCreateTemplate:anEntityName
                 predicate:(NSPredicate *)aPredicate
                   context:(NSManagedObjectContext *)aContext

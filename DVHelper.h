@@ -98,7 +98,6 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 + (void)showErrorAlertWithMessage:(NSString *)message;
 + (BOOL)isNilOrEmtpyString:(NSString *)aString;
 + (NSString *)stringOrDefault:(NSString *)aString defaultString:(NSString *)defaultString;
-+ (UIView *)firstResponderForView:(UIView *)aView;
 + (id)getOrCreateTemplate:anEntityName
                   predicate:(NSPredicate *)aPredicate
                     context:(NSManagedObjectContext *)aContext
