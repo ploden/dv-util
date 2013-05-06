@@ -171,9 +171,11 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
 }
 
 - (NSString *)DV_stringByPercentEncodingUsingEncoding:(NSStringEncoding)encoding {
-return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self,
-                                                            NULL, (CFStringRef)@";/?:@&=$+{}<>,",
-                                                            CFStringConvertNSStringEncodingToEncoding(encoding));
+  return (NSString *) CFBridgingRelease(
+                                        CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self,
+                                                                                NULL, (CFStringRef)@";/?:@&=$+{}<>,",
+                                                                                CFStringConvertNSStringEncodingToEncoding(encoding))
+                                        );
 }  
 
 @end
@@ -181,7 +183,7 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
 @implementation NSArray (DVHelper)
 
 - (NSArray *)DV_sortedArrayUsingKey:(NSString *)aKey ascending:(BOOL)ascending {
-  NSSortDescriptor * descriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:ascending] autorelease];
+  NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:aKey ascending:ascending];
   NSArray *a = [NSArray arrayWithObject:descriptor];
   return [self sortedArrayUsingDescriptors:a];
 }
@@ -310,13 +312,12 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
 		}
 	}
 	
-	return [[[NSString alloc] initWithBytesNoCopy:characters length:length encoding:NSASCIIStringEncoding freeWhenDone:YES] autorelease];
+	return [[NSString alloc] initWithBytesNoCopy:characters length:length encoding:NSASCIIStringEncoding freeWhenDone:YES];
 }
 
 + (void)showErrorAlertWithMessage:(NSString *)message {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
-  [alert release];
 }
 
 + (BOOL)isNilOrEmtpyString:(NSString *)aString {
@@ -380,8 +381,7 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
     return obj;
     return nil;
   } else if ([fetchedObjects count] > 1) {
-#warning FIXME ploden
-    // throw more than one exception
+    NSLog(@"WARNING: DVHelper:getOrCreateTemplate:predicate:context:didCreate:createBlock: [fetchedObjects count] is > 1");
     return nil;
   } else {
     if (didCreate != NULL) {
@@ -407,10 +407,8 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
                                       managedObjectContext:aContext
                                         sectionNameKeyPath:nil 
                                                  cacheName:nil];
-
-  [fetchRequest release];
   
-  return [fetchedResultsController autorelease]; 
+  return fetchedResultsController; 
 }
 
 + (id)loadObjectOfClassFromNib:(Class)aClass {
@@ -452,9 +450,10 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   [DVHelper setSize:imageView size:CGSizeMake(newWidth, newHeight)];
 }
 
+/*
 + (CFDictionaryRef)CFDictionaryWithObjectsAndKeys:(NSArray *)objects keys:(NSArray *)keys {
   NSRange objectsRange = NSMakeRange(0, [objects count]);
-  id* cObjectsArray = calloc(objectsRange.length, sizeof(id));
+  id* cObjectsArray = (id *)calloc(objectsRange.length, sizeof(id));
   [objects getObjects:cObjectsArray range:objectsRange];
   
   NSRange keysRange = NSMakeRange(0, [keys count]);
@@ -470,6 +469,7 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   
   return dict;
 }
+ */
 
 + (NSArray *)fetchResultsForEntityName:(NSString *)entityName predicate:(NSPredicate *)predicate managedObjectContext:(NSManagedObjectContext *)context
 {
@@ -477,7 +477,6 @@ return (NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)s
   [fetchRequest setPredicate:predicate];
   NSError *error = nil;
   NSArray *a = [context executeFetchRequest:fetchRequest error:&error];
-  [fetchRequest release];
   return a;
 }
 
