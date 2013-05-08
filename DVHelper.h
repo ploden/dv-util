@@ -27,13 +27,13 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 
 @end
 
-@interface UITableView (XCRHelper)
+@interface UITableView (DVHelper)
 
 - (void)deselectSelectedRow;
 
 @end
 
-@interface NSDictionary (XCRHelper)
+@interface NSDictionary (DVHelper)
 
 - (id)objectForKeyOrDefault:(id)aKey aDefault:(id)aDefault;
 - (id)objectForKeyOrEmptyString:(id)aKey;
@@ -44,7 +44,7 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 
 @end
 
-@interface NSMutableDictionary (XCRHelper)
+@interface NSMutableDictionary (DVHelper)
 
 - (void)setObjectIfNotNil:(id)anObject forKey:(id)aKey;
 
@@ -71,6 +71,12 @@ IMP impOfCallingMethod(id lookupObject, SEL selector);
 
 @interface UIView (DVHelper)
 
+- (void)DV_setOriginX:(CGFloat)x;
+- (void)DV_setOriginY:(CGFloat)y;
+- (void)DV_setOrigin:(CGPoint)origin;
+- (void)DV_setWidth:(CGFloat)width;
+- (void)DV_setHeight:(CGFloat)height;
+- (void)DV_setSize:(CGSize)aSize;
 - (CGFloat)DV_originYPlusHeight;
 - (CGFloat)DV_originXPlusWidth;
 

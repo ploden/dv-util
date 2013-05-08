@@ -96,7 +96,7 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
 
 @end
 
-@implementation UITableView (XCRHelper)
+@implementation UITableView (DVHelper)
 
 - (void)deselectSelectedRow {
   if (self.indexPathForSelectedRow) {
@@ -106,7 +106,7 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
 
 @end
 
-@implementation NSDictionary (XCRHelper)
+@implementation NSDictionary (DVHelper)
 
 - (id)objectForKeyOrDefault:(id)aKey aDefault:(id)aDefault {
   id obj = [self objectForKey:aKey];
@@ -152,7 +152,7 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
 
 @end
 
-@implementation NSMutableDictionary (XCRHelper)
+@implementation NSMutableDictionary (DVHelper)
 
 - (void)setObjectIfNotNil:(id)anObject forKey:(id)aKey {
   if (anObject) {
@@ -200,6 +200,42 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
 @end
 
 @implementation UIView (DVHelper)
+
+- (void)DV_setOriginX:(CGFloat)x {
+  CGRect frameRect = self.frame;
+  frameRect.origin.x = x;
+  self.frame = frameRect;
+}
+
+- (void)DV_setOriginY:(CGFloat)y {
+  CGRect frameRect = self.frame;
+  frameRect.origin.y = y;
+  self.frame = frameRect;
+}
+
+- (void)DV_setOrigin:(CGPoint)origin {
+  CGRect frameRect = self.frame;
+  frameRect.origin = origin;
+  self.frame = frameRect;
+}
+
+- (void)DV_setWidth:(CGFloat)width {
+  CGRect frameRect = self.frame;
+  frameRect.size.width = width;
+  self.frame = frameRect;
+}
+
+- (void)DV_setHeight:(CGFloat)height {
+  CGRect frameRect = self.frame;
+  frameRect.size.height = height;
+  self.frame = frameRect;
+}
+
+- (void)DV_setSize:(CGSize)aSize {
+  CGRect frameRect = self.frame;
+  frameRect.size = aSize;
+  self.frame = frameRect;
+}
 
 - (CGFloat)DV_originYPlusHeight {
   return self.frame.origin.y + self.frame.size.height;
