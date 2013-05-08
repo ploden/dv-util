@@ -125,7 +125,7 @@
     }
   }
   
-  UIViewController *vc = [self initVCForIndex:idx];
+  UIViewController *vc = [self createVCForIndex:idx];
   [self addChildViewController:vc];
   _viewControllers[idx] = vc;
   
@@ -138,7 +138,7 @@
   return NSNotFound;
 }
 
-- (UIViewController *)initVCForIndex:(NSUInteger)idx {
+- (UIViewController *)createVCForIndex:(NSUInteger)idx {
   // subclass
   [DVHelper raiseVirtualMethodCalledException];
   return nil;

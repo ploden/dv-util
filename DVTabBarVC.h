@@ -18,6 +18,6 @@
 - (UIViewController *)selectedViewController;
 - (CGRect)childViewControllerFrameRect;
 + (NSUInteger)numTabs;
-- (UIViewController *)initVCForIndex:(NSUInteger)idx;
+- (UIViewController *)createVCForIndex:(NSUInteger)idx;
 
 @end
