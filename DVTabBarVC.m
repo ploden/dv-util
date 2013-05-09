@@ -67,6 +67,8 @@
   [aVC.view setFrame:[self childViewControllerFrameRect]];
   [aVC.view setTag:1001];
   
+  [self setTitle:aVC.title];
+  
   if (aPreviousVC.parentViewController) {
     [self transitionFromViewController:aPreviousVC toViewController:aVC duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
   } else {
