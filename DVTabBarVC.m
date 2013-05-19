@@ -8,9 +8,7 @@
 
 #import "DVTabBarVC.h"
 
-@interface DVTabBarVC () {
-  NSUInteger _selectedIndex;
-}
+@interface DVTabBarVC ()
 
 @property (nonatomic, strong) IBOutlet UIView *contentView;
 /*
