@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) NSArray *tabBarButtons;
-@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, assign) NSUInteger selectedIndex;
 
 - (UIViewController *)selectedViewController;
 - (CGRect)childViewControllerFrameRect;
