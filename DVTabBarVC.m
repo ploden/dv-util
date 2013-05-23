@@ -10,15 +10,6 @@
 
 @interface DVTabBarVC ()
 
-@property (nonatomic, strong) IBOutlet UIView *contentView;
-/*
-@property (nonatomic, strong) IBOutlet UIButton *firstButton;
-@property (nonatomic, strong) IBOutlet UIButton *secondButton;
-@property (nonatomic, strong) IBOutlet UIButton *thirdButton;
-@property (nonatomic, strong) IBOutlet UIButton *fourthButton;
-@property (nonatomic, strong) IBOutlet UIButton *fifthButton;
- */
-
 - (IBAction)tabBarButtonTouched:(id)sender;
 
 @end
@@ -29,17 +20,6 @@
 {
   [super viewDidLoad];
 
-  /*
-  NSMutableArray *tmpArray = [NSMutableArray array];
-  if (self.firstButton) [tmpArray addObject:self.firstButton];
-  if (self.secondButton) [tmpArray addObject:self.secondButton];
-  if (self.thirdButton) [tmpArray addObject:self.thirdButton];
-  if (self.fourthButton) [tmpArray addObject:self.fourthButton];
-  if (self.fifthButton) [tmpArray addObject:self.fifthButton];
-  [self setButtons:tmpArray];
-   */
-  
-  //[self.firstButton setSelected:YES];
   _selectedIndex = NSNotFound;
   [self setSelectedIndex:0];
 }

@@ -10,15 +10,20 @@
 
 @interface DVTabBarVC : UIViewController {
   NSArray *_tabBarButtons;
+  NSUInteger _selectedIndex;
 }
 
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) NSArray *tabBarButtons;
 @property (nonatomic, assign) NSUInteger selectedIndex;
+@property (nonatomic, strong) IBOutlet UIView *contentView;
 
 - (UIViewController *)selectedViewController;
 - (CGRect)childViewControllerFrameRect;
 + (NSUInteger)numTabs;
 - (UIViewController *)createVCForIndex:(NSUInteger)idx;
+- (IBAction)tabBarButtonTouched:(id)sender;
+- (void)configureWithViewController:(UIViewController *)aVC previousViewController:(UIViewController*)aPreviousVC;
+- (void)setSelectedIndex:(NSUInteger)idx;
 
 @end
