@@ -89,7 +89,7 @@
 }
 
 - (CGRect)childViewControllerFrameRect {
-  return CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height);
+  return self.contentView.bounds;
 }
 
 - (UIViewController *)vcForIndex:(NSUInteger)idx {
