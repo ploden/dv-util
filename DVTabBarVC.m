@@ -21,7 +21,7 @@
   [super viewDidLoad];
 
   _selectedIndex = NSNotFound;
-  [self setSelectedIndex:0];
+  [self setSelectedIndex:self.initialSelectedIndex];
 }
 
 - (void)didReceiveMemoryWarning
