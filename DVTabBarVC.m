@@ -53,7 +53,8 @@
 }
 
 - (UIViewController *)selectedViewController {
-  return (_selectedIndex < [self.childViewControllers count]) ? self.childViewControllers[_selectedIndex] : nil;
+  NSArray *vcArr = [self.childViewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"view.tag == %d",_selectedIndex]];
+  return ([vcArr count] > 0) ? vcArr[0] : nil;
 }
 
 - (void)setSelectedIndex:(NSUInteger)idx {
