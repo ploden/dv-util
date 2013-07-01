@@ -38,8 +38,8 @@
 - (void)configureWithViewController:(UIViewController *)aVC previousViewController:(UIViewController*)aPreviousVC {
   [aVC.view setFrame:[self childViewControllerFrameRect]];;
   
-  if (! aVC.title && ! [DVHelper isNilOrEmtpyString:[self.tabBarButtons[[self.childViewControllers indexOfObject:aVC]] titleForState:UIControlStateNormal]]) {
-    aVC.title = [self.tabBarButtons[[self.childViewControllers indexOfObject:aVC]] titleForState:UIControlStateNormal];
+  if (! aVC.title && ! [DVHelper isNilOrEmtpyString:[self.tabBarButtons[aVC.view.tag] titleForState:UIControlStateNormal]]) {
+    aVC.title = [self.tabBarButtons[aVC.view.tag] titleForState:UIControlStateNormal];
   }
   
   [self setTitle:aVC.title];
