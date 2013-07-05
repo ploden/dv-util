@@ -25,5 +25,6 @@
 - (IBAction)tabBarButtonTouched:(id)sender;
 - (void)configureWithViewController:(UIViewController *)aVC previousViewController:(UIViewController*)aPreviousVC;
 - (void)setSelectedIndex:(NSUInteger)idx;
+- (UIViewController *)vcForIndex:(NSUInteger)idx;
 
 @end
