@@ -16,58 +16,45 @@
 
 @implementation DVTabBarVC
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
   [super viewDidLoad];
 
   _selectedIndex = NSNotFound;
-  [self setSelectedIndex:0];
+  [self setSelectedIndex:self.initialSelectedIndex];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   
-  for (int i = 0; i < [self.class numTabs]; i++) {
-    id obj = _viewControllers[i];
-    
-    if (obj == [NSNull null]) continue;
-    
-    if (i != _selectedIndex) {
-      UIViewController *vc = (UIViewController *)obj;
-      [vc removeFromParentViewController];
-      _viewControllers[i] = [NSNull null];
+  for (UIViewController *controller in self.childViewControllers) {
+    if (controller != self.selectedViewController) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [controller removeFromParentViewController];
+      });
     }
   }
 }
 
 - (void)configureWithViewController:(UIViewController *)aVC previousViewController:(UIViewController*)aPreviousVC {
-  [aVC.view setFrame:[self childViewControllerFrameRect]];
-  [aVC.view setTag:1001];
+  [aVC.view setFrame:[self childViewControllerFrameRect]];;
+  
+  if (! aVC.title && ! [DVHelper isNilOrEmtpyString:[self.tabBarButtons[aVC.view.tag] titleForState:UIControlStateNormal]]) {
+    aVC.title = [self.tabBarButtons[aVC.view.tag] titleForState:UIControlStateNormal];
+  }
   
   [self setTitle:aVC.title];
   
   if (aPreviousVC.parentViewController) {
     [self transitionFromViewController:aPreviousVC toViewController:aVC duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
   } else {
-    // already child because of vcForIndex
+    // already child because of vcForIndex    
     [self.contentView addSubview:aVC.view];
   }
 }
 
-- (NSArray *)viewControllers {
-  if ( ! _viewControllers ) {
-    _viewControllers = [[NSMutableArray alloc] initWithCapacity:[self.class numTabs]];
-    
-    for (int i = 0; i < [self.class numTabs]; i++) {
-      _viewControllers[i] = [NSNull null];
-    }
-  }
-  return _viewControllers;
-}
-
 - (UIViewController *)selectedViewController {
-  return (_selectedIndex < [self.viewControllers count]) ? self.viewControllers[_selectedIndex] : nil;
+  NSArray *vcArr = [self.childViewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"view.tag == %d",_selectedIndex]];
+  return ([vcArr count] > 0) ? vcArr[0] : nil;
 }
 
 - (void)setSelectedIndex:(NSUInteger)idx {
@@ -89,25 +76,23 @@
 }
 
 - (CGRect)childViewControllerFrameRect {
-  return CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height);
+  return self.contentView.bounds;
 }
 
 - (UIViewController *)vcForIndex:(NSUInteger)idx {
-  if (idx < [_viewControllers count]) {
-    UIViewController *vc = _viewControllers[idx];
-    if ((id)vc != [NSNull null]) {
-      if ([vc isViewLoaded]) {
-        return vc;
-      } else {
-        [vc removeFromParentViewController];
-        [_viewControllers replaceObjectAtIndex:idx withObject:[NSNull null]];
-      }
+  NSArray *vcArr = [self.childViewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"view.tag == %d",idx]];
+  if ([vcArr count] > 0) {
+    UIViewController *vc = vcArr[0];
+    if ([vc isViewLoaded]) {
+      return vc;
+    } else {
+      [vc removeFromParentViewController];
     }
   }
   
   UIViewController *vc = [self createVCForIndex:idx];
+  vc.view.tag = idx;
   [self addChildViewController:vc];
-  _viewControllers[idx] = vc;
   
   return vc;
 }
