@@ -394,10 +394,27 @@ IMP impOfCallingMethod(id lookupObject, SEL selector)
     }
     id obj = aCreateBlock();
     return obj;
-    return nil;
   } else if ([fetchedObjects count] > 1) {
-    NSLog(@"WARNING: DVHelper:getOrCreateTemplate:predicate:context:didCreate:createBlock: [fetchedObjects count] is > 1");
-    return nil;
+    NSManagedObject *permanent;
+    
+    NSUInteger permIDCount = 0;
+    for (NSManagedObject *obj in fetchedObjects) {
+      if ( ! [obj.objectID isTemporaryID] ) {
+        permIDCount++;
+        permanent = obj;
+      }
+    }
+    
+    if (permIDCount > 1) {
+      @throw [NSException exceptionWithName:@"WARNING: DVHelper:getOrCreateTemplate:predicate:context:didCreate:createBlock: [fetchedObjects count] is > 1" reason:@"This must not happen." userInfo:nil];
+      //NSLog(@"WARNING: DVHelper:getOrCreateTemplate:predicate:context:didCreate:createBlock: [fetchedObjects count] is > 1");
+      return nil;
+    } else {
+      if (didCreate != NULL) {
+        *didCreate = NO;
+      }
+      return permanent;
+    }
   } else {
     if (didCreate != NULL) {
       *didCreate = NO;
